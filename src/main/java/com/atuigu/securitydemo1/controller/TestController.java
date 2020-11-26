@@ -1,6 +1,7 @@
 package com.atuigu.securitydemo1.controller;
 
 
+import com.atuigu.securitydemo1.entity.Users;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
@@ -27,24 +28,24 @@ public class TestController {
     }
 
     @GetMapping("update")
-    //@Secured({"ROLE_sale","ROLE_manager"})
-    //@PreAuthorize("hasAnyAuthority('admins')")
-    //@PostAuthorize("hasAnyAuthority('admins')")
+    //@Secured({"ROLE_manager","ROLE_manager"})   // 角色是否包含 ROLE_manager  和 ROLE_manager  这个
+    @PreAuthorize("hasAnyAuthority('admins')")    // 进入方法前会调用这个方法
+    @PostAuthorize("hasAnyAuthority('admins')")
     public String update() {
         System.out.println("update......");
         return "hello update";
     }
 
-//    @GetMapping("getAll")
-//    @PostAuthorize("hasAnyAuthority('admins')")
-//    @PostFilter("filterObject.username == 'admin1'")
-//    public List<Users> getAllUser(){
-//        ArrayList<Users> list = new ArrayList<>();
-//        list.add(new Users(11,"admin1","6666"));
-//        list.add(new Users(21,"admin2","888"));
-//        System.out.println(list);
-//        return list;
-//    }
+    @GetMapping("getAll")
+    @PostAuthorize("hasAnyAuthority('admins')")
+    @PostFilter("filterObject.username == 'admin1'")
+    public List<Users> getAllUser(){
+        ArrayList<Users> list = new ArrayList<>();
+        list.add(new Users(11,"admin1","6666"));
+        list.add(new Users(21,"admin2","888"));
+        System.out.println(list);
+        return list;
+    }
 
 
 }
